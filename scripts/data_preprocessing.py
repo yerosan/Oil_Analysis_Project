@@ -17,7 +17,7 @@ class DataPreprocessor:
     def _load_data(self) -> pd.DataFrame:
         """Loads data from the specified CSV file path."""
         try:
-            data = pd.read_csv(self.file_path, parse_dates=['Date'], index_col='Date')
+            data = pd.read_csv(self.file_path, parse_dates=['Date'])
             print("Data loaded successfully.")
             return data
         except Exception as e:

@@ -1,5 +1,5 @@
 import pandas as pd
-
+import matplotlib.pyplot as plt
 class FeatureEngineer:
     def __init__(self, data: pd.DataFrame):
         """
@@ -38,3 +38,13 @@ class FeatureEngineer:
         self.add_date_features()
         print("Feature engineering complete.")
         return self.data
+    def plot_time_series(self, dataset_name, column):
+        """Plot time series for a specific column in the dataset."""
+        print(f"Plotting time series for {dataset_name} - {column}.")
+        df = self.data[dataset_name]
+        plt.figure(figsize=(10, 5))
+        plt.plot(df.index, df[column])
+        plt.title(f"{dataset_name} - {column}")
+        plt.xlabel("Date")
+        plt.ylabel(column)
+        plt.show()
