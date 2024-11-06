@@ -8,6 +8,8 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error, mean_absolute_percentage_error, r2_score
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Dropout
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense, Dropout, Input
 
 class LSTMModelling:
     def __init__(self, time_step: int = 60, model_folder: str = 'models'):
@@ -37,6 +39,18 @@ class LSTMModelling:
         test_scaled = scaler.transform(test_data.values.reshape(-1, 1))
         return train_scaled, test_scaled, scaler
 
+    def _scale_data(self, train_data, test_data):
+        # Select only the 'Price' column for scaling
+        train_data_price = train_data['Price'].values.reshape(-1, 1)
+        test_data_price = test_data['Price'].values.reshape(-1, 1)
+
+        # Initialize and fit the scaler on the training data only
+        scaler = MinMaxScaler(feature_range=(0, 1))
+        train_scaled = scaler.fit_transform(train_data_price)
+        test_scaled = scaler.transform(test_data_price)
+
+        return train_scaled, test_scaled, scaler
+    
     def _create_dataset(self, data: np.ndarray) -> tuple:
         """
         Prepares data for LSTM with the specified time steps.
@@ -55,21 +69,22 @@ class LSTMModelling:
 
     def _build_lstm_model(self, input_shape: tuple) -> Sequential:
         """
-        Builds and compiles an LSTM model.
+        Builds and returns an LSTM model with a given input shape.
 
         Args:
-            input_shape (tuple): The shape of the input data.
+            input_shape (tuple): Shape of the input data (time_steps, num_features).
 
         Returns:
-            Sequential: The compiled LSTM model.
+            Sequential: A compiled LSTM model.
         """
-        model = Sequential([
-            LSTM(units=50, return_sequences=True, input_shape=input_shape),
-            Dropout(0.2),
-            LSTM(units=50),
-            Dropout(0.2),
-            Dense(units=1)
-        ])
+        model = Sequential()
+        model.add(Input(shape=input_shape))  # Explicit Input layer
+        model.add(LSTM(units=50, return_sequences=True))
+        model.add(Dropout(0.2))
+        model.add(LSTM(units=50, return_sequences=False))
+        model.add(Dropout(0.2))
+        model.add(Dense(units=1))  # Output layer for regression
+
         model.compile(optimizer='adam', loss='mean_squared_error')
         return model
 
@@ -84,13 +99,13 @@ class LSTMModelling:
         Returns:
             tuple: Original test data, true values (y_test), and predictions (test_predict).
         """
-        data = data[['Date', 'Price']].copy()
+        # data = data[['Date', 'Price']].copy()
         data['Price'] = data['Price'].astype(float)
         data['Date'] = pd.to_datetime(data['Date'])
         data.set_index('Date', inplace=True)
         
         train_size = int(len(data) * 0.8)
-        train_data, test_data = data['Price'][:train_size], data['Price'][train_size:]
+        train_data, test_data = data[:train_size], data[train_size:]
         
         train_scaled, test_scaled, scaler = self._scale_data(train_data, test_data)
         X_train, y_train = self._create_dataset(train_scaled)
