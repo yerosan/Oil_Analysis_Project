@@ -1,0 +1,103 @@
+App.css
+
+/* Reset some default styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: #f5f7fa;
+  color: #333;
+}
+
+.App {
+  text-align: center;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #1a73e8;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #1a73e8;
+  padding-bottom: 0.5rem;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Styling for the metrics section */
+.metrics-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.metric-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  width: 200px;
+  margin: 0.5rem;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.metric-card:hover {
+  transform: scale(1.05);
+}
+
+.metric-title {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.metric-value {
+  font-size: 1.6rem;
+  color: #1a73e8;
+  font-weight: bold;
+}
+
+/* Chart container for better spacing and style */
+.chart-container {
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 2rem;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .metrics-container {
+      flex-direction: column;
+      align-items: center;
+  }
+  
+  .metric-card {
+      width: 90%;
+  }
+
+  .chart-container {
+      padding: 1rem;
+  }
+}

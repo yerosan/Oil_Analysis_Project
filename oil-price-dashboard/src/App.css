@@ -1,0 +1,159 @@
+/* App.css */
+
+/* Reset some default styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: #f0f4f8;
+  color: #333;
+}
+
+.App {
+  text-align: center;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Styling for the metrics section */
+.metrics-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.metric-card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(44, 62, 80, 0.1);
+  padding: 1.5rem;
+  width: 220px;
+  margin: 0.5rem;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(52, 152, 219, 0.15), rgba(46, 204, 113, 0.15));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.metric-card:hover::before {
+  opacity: 1;
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(44, 62, 80, 0.2);
+}
+
+.metric-title {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  color: #3498db;
+  font-weight: bold;
+  animation: fadeInUp 0.4s ease;
+}
+
+/* Add a subtle fade-in animation for metric values */
+@keyframes fadeInUp {
+  0% {
+      opacity: 0;
+      transform: translateY(10px);
+  }
+  100% {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Chart container for better spacing and style */
+.chart-container {
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 2rem;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(44, 62, 80, 0.1);
+  animation: slideIn 0.6s ease;
+}
+
+/* Slide-in animation for the chart container */
+@keyframes slideIn {
+  0% {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  100% {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Tooltip styling */
+.tooltip {
+  background-color: rgba(44, 62, 80, 0.9);
+  color: #ffffff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .metrics-container {
+      flex-direction: column;
+      align-items: center;
+  }
+  
+  .metric-card {
+      width: 90%;
+  }
+
+  .chart-container {
+      padding: 1rem;
+  }
+}
