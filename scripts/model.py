@@ -124,6 +124,9 @@ class LSTMModelling:
         test_predict = scaler.inverse_transform(model.predict(X_test))
         y_train = scaler.inverse_transform(y_train.reshape(-1, 1))
         y_test = scaler.inverse_transform(y_test.reshape(-1, 1))
+        
+        np.save("y_test.npy", y_test)
+        np.save("test_predict.npy", test_predict)
 
         # Save the model
         self._save_model(model, model_name)

@@ -27,8 +27,6 @@ def get_model_data():
     # Load y_test and test_predict data
     y_test = np.load("y_test.npy").tolist()
     test_predict = np.load("test_predict.npy").tolist()
-    print("_____-----",test_predict)
-    
     # Return as JSON
     return jsonify({"y_test": y_test, "test_predict": test_predict})
 
